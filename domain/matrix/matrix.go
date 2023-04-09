@@ -28,12 +28,7 @@ func NewRandomMatrix() Matrix {
 
 	for i := range matrix {
 		for j := range matrix[i] {
-			num := rand.Intn(MAX_MATRIX_VAL)
-			if rand.Intn(2) == 0 {
-				matrix[i][j] = -num
-			} else {
-				matrix[i][j] = num
-			}
+			matrix[i][j] = rand.Intn(MAX_MATRIX_VAL) - 5
 		}
 	}
 
