@@ -8,11 +8,12 @@ import (
 )
 
 func TestNewRandomMatrix(t *testing.T) {
-	totalInitialZeros := MAX_SQUARE_MATRIX_DIMENSION * MAX_SQUARE_MATRIX_DIMENSION
-	countedZeros := 0
-	for i := 0; i < 10; i++ {
 
+	for i := 0; i < 10; i++ {
+		totalInitialZeros := MAX_SQUARE_MATRIX_DIMENSION * MAX_SQUARE_MATRIX_DIMENSION
+		countedZeros := 0
 		m := NewRandomMatrix()
+
 		for i, row := range m {
 			for j := range row {
 				if m[i][j] == 0 {
