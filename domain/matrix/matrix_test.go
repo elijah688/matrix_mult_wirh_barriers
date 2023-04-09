@@ -12,7 +12,7 @@ func TestNewRandomMatrix(t *testing.T) {
 	for i := 0; i < 10; i++ {
 		totalInitialZeros := MAX_SQUARE_MATRIX_DIMENSION * MAX_SQUARE_MATRIX_DIMENSION
 		countedZeros := 0
-		m := NewRandomMatrix()
+		m := NewSquareRandomMatrix(MAX_SQUARE_MATRIX_DIMENSION)
 
 		for i, row := range m {
 			for j := range row {
@@ -49,11 +49,7 @@ func TestMult(t *testing.T) {
 
 	t.Run("multiply vanilla", func(t *testing.T) {
 
-<<<<<<< HEAD
 		actual := m.Multiply(otherMartrix)
-=======
-		actual := m.Miltiply(otherMartrix)
->>>>>>> 5eb8e87 (add benchmark)
 		if !assert.Equal(t, actual, expected) {
 			t.Fatalf(fmt.Sprintf("\n%s is not the correct result when multiplying \n%s with \n%s", actual, m.String(), otherMartrix.String()))
 		}
@@ -66,15 +62,4 @@ func TestMult(t *testing.T) {
 			t.Fatalf(fmt.Sprintf("\n%s is not the correct result when multiplying \n%s with \n%s", actual, m.String(), otherMartrix.String()))
 		}
 	})
-<<<<<<< HEAD
-}
-
-func TestIsZeroMatrix(t *testing.T) {
-	zero := NewSquareZeroMatrix(MAX_SQUARE_MATRIX_DIMENSION)
-	random := NewSquareRandomMatrix(MAX_SQUARE_MATRIX_DIMENSION)
-
-	assert.True(t, zero.IsZero())
-	assert.False(t, random.IsZero())
-=======
->>>>>>> 5eb8e87 (add benchmark)
 }

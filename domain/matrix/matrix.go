@@ -28,16 +28,16 @@ func (r Row) MultiplyWithMatrix(rowIdx int, otherMatrix Matrix, output Matrix) {
 
 type Matrix []Row
 
-func NewZeroMatrix() Matrix {
-	matrix := make([]Row, MAX_SQUARE_MATRIX_DIMENSION)
+func NewSquareZeroMatrix(dimension int) Matrix {
+	matrix := make([]Row, dimension)
 	for i := range matrix {
-		matrix[i] = make([]int, MAX_SQUARE_MATRIX_DIMENSION)
+		matrix[i] = make([]int, dimension)
 	}
 	return matrix
 }
 
-func NewRandomMatrix() Matrix {
-	matrix := NewZeroMatrix()
+func NewSquareRandomMatrix(dimension int) Matrix {
+	matrix := NewSquareZeroMatrix(dimension)
 	rand.Seed(time.Now().UnixNano())
 
 	for i := range matrix {
@@ -84,11 +84,7 @@ func (r Row) MultiplyWithMatrix(rowIdx int, otherMatrix Matrix, output Matrix) {
 
 func (m Matrix) MultiplyWithBarrier(otherMatrix Matrix) Matrix {
 	barrier := barrier.NewBarrier(len(m))
-
-	res := make(Matrix, len(m))
-	for i := range res {
-		res[i] = make(Row, len(m))
-	}
+	res := NewSquareZeroMatrix(len(m))
 
 	wg := new(sync.WaitGroup)
 	for rowIdx, row := range m {
