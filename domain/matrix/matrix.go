@@ -36,6 +36,20 @@ func NewSquareZeroMatrix(dimension int) Matrix {
 	return matrix
 }
 
+func (m Matrix) IsZero() bool {
+	count := len(m) * len(m)
+	for i := range m {
+		for j := range m[i] {
+			if m[i][j] == 0 {
+				count--
+			}
+		}
+	}
+	if count == 0 {
+		return true
+	}
+	return false
+}
 func NewSquareRandomMatrix(dimension int) Matrix {
 	matrix := NewSquareZeroMatrix(dimension)
 	rand.Seed(time.Now().UnixNano())
@@ -60,26 +74,6 @@ func (m Matrix) String() string {
 	}
 
 	return sb.String()
-}
-
-type Row []int
-
-func (r Row) MultiplyWithMatrix(rowIdx int, otherMatrix Matrix, output Matrix) {
-	barrier := barrier.NewBarrier(len(r))
-	wg := new(sync.WaitGroup)
-	for otherColIdx := 0; otherColIdx < len(r); otherColIdx++ {
-		wg.Add(1)
-		go func(otherColIdx int) {
-			barrier.Wait()
-			num := 0
-			for otherRowIdx := 0; otherRowIdx < len(r); otherRowIdx++ {
-				num += r[otherRowIdx] * otherMatrix[otherRowIdx][otherColIdx]
-			}
-			output[rowIdx][otherColIdx] = num
-			wg.Done()
-		}(otherColIdx)
-	}
-	wg.Wait()
 }
 
 func (m Matrix) MultiplyWithBarrier(otherMatrix Matrix) Matrix {

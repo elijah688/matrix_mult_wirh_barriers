@@ -63,3 +63,11 @@ func TestMult(t *testing.T) {
 		}
 	})
 }
+
+func TestIsZeroMatrix(t *testing.T) {
+	zero := NewSquareZeroMatrix(MAX_SQUARE_MATRIX_DIMENSION)
+	random := NewSquareRandomMatrix(MAX_SQUARE_MATRIX_DIMENSION)
+
+	assert.True(t, zero.IsZero())
+	assert.False(t, random.IsZero())
+}
