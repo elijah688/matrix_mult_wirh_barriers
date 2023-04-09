@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	MAX_SQUARE_MATRIX_DIMENSION = 3
+	MAX_SQUARE_MATRIX_DIMENSION = 100
 	MAX_MATRIX_VAL              = 10
 )
 
@@ -53,7 +53,6 @@ func (m Matrix) String() string {
 	sb := new(strings.Builder)
 
 	for i := range m {
-		fmt.Println(i)
 		for j := range m[i] {
 			sb.WriteString(fmt.Sprintf("%4d", m[i][j]))
 		}
@@ -66,14 +65,14 @@ func (m Matrix) String() string {
 type Row []int
 
 func (r Row) MultiplyWithMatrix(rowIdx int, otherMatrix Matrix, output Matrix) {
-	barrier := barrier.NewBarrier(MAX_SQUARE_MATRIX_DIMENSION)
+	barrier := barrier.NewBarrier(len(r))
 	wg := new(sync.WaitGroup)
-	for otherColIdx := 0; otherColIdx < MAX_SQUARE_MATRIX_DIMENSION; otherColIdx++ {
+	for otherColIdx := 0; otherColIdx < len(r); otherColIdx++ {
 		wg.Add(1)
 		go func(otherColIdx int) {
 			barrier.Wait()
 			num := 0
-			for otherRowIdx := 0; otherRowIdx < MAX_SQUARE_MATRIX_DIMENSION; otherRowIdx++ {
+			for otherRowIdx := 0; otherRowIdx < len(r); otherRowIdx++ {
 				num += r[otherRowIdx] * otherMatrix[otherRowIdx][otherColIdx]
 			}
 			output[rowIdx][otherColIdx] = num
@@ -83,14 +82,13 @@ func (r Row) MultiplyWithMatrix(rowIdx int, otherMatrix Matrix, output Matrix) {
 	wg.Wait()
 }
 
-func (m Matrix) Multiply(otherMatrix Matrix) Matrix {
-	// 1 2 3            // 1 4 7
-	// 4 5 6            // 2 5 8
-	// 7 8 9            // 3 6 9
+func (m Matrix) MultiplyWithBarrier(otherMatrix Matrix) Matrix {
+	barrier := barrier.NewBarrier(len(m))
 
-	barrier := barrier.NewBarrier(MAX_SQUARE_MATRIX_DIMENSION)
-
-	res := NewZeroMatrix()
+	res := make(Matrix, len(m))
+	for i := range res {
+		res[i] = make(Row, len(m))
+	}
 
 	wg := new(sync.WaitGroup)
 	for rowIdx, row := range m {

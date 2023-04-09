@@ -29,7 +29,6 @@ func TestNewRandomMatrix(t *testing.T) {
 }
 
 func TestMult(t *testing.T) {
-
 	m := Matrix{
 		{1, 2, 3},
 		{4, 5, 6},
@@ -50,7 +49,11 @@ func TestMult(t *testing.T) {
 
 	t.Run("multiply vanilla", func(t *testing.T) {
 
+<<<<<<< HEAD
 		actual := m.Multiply(otherMartrix)
+=======
+		actual := m.Miltiply(otherMartrix)
+>>>>>>> 5eb8e87 (add benchmark)
 		if !assert.Equal(t, actual, expected) {
 			t.Fatalf(fmt.Sprintf("\n%s is not the correct result when multiplying \n%s with \n%s", actual, m.String(), otherMartrix.String()))
 		}
@@ -63,6 +66,7 @@ func TestMult(t *testing.T) {
 			t.Fatalf(fmt.Sprintf("\n%s is not the correct result when multiplying \n%s with \n%s", actual, m.String(), otherMartrix.String()))
 		}
 	})
+<<<<<<< HEAD
 }
 
 func TestIsZeroMatrix(t *testing.T) {
@@ -71,4 +75,6 @@ func TestIsZeroMatrix(t *testing.T) {
 
 	assert.True(t, zero.IsZero())
 	assert.False(t, random.IsZero())
+=======
+>>>>>>> 5eb8e87 (add benchmark)
 }
