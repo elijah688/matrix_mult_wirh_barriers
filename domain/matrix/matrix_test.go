@@ -48,8 +48,27 @@ func TestMult(t *testing.T) {
 		{50, 122, 194},
 	}
 
-	actual := m.Multiply(otherMartrix)
-	if !assert.Equal(t, actual, expected) {
-		t.Fatalf(fmt.Sprintf("\n%s is not the correct result when multiplying \n%s with \n%s", actual, m.String(), otherMartrix.String()))
-	}
+	t.Run("multiply vanilla", func(t *testing.T) {
+
+		actual := m.Multiply(otherMartrix)
+		if !assert.Equal(t, actual, expected) {
+			t.Fatalf(fmt.Sprintf("\n%s is not the correct result when multiplying \n%s with \n%s", actual, m.String(), otherMartrix.String()))
+		}
+	})
+
+	t.Run("multiply with barrier", func(t *testing.T) {
+
+		actual := m.MultiplyWithBarrier(otherMartrix)
+		if !assert.Equal(t, actual, expected) {
+			t.Fatalf(fmt.Sprintf("\n%s is not the correct result when multiplying \n%s with \n%s", actual, m.String(), otherMartrix.String()))
+		}
+	})
+}
+
+func TestIsZeroMatrix(t *testing.T) {
+	zero := NewSquareZeroMatrix(MAX_SQUARE_MATRIX_DIMENSION)
+	random := NewSquareRandomMatrix(MAX_SQUARE_MATRIX_DIMENSION)
+
+	assert.True(t, zero.IsZero())
+	assert.False(t, random.IsZero())
 }
